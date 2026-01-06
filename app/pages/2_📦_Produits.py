@@ -15,11 +15,8 @@ ensure_db()
 
 from app.utils.queries import (
     Q_MINMAX_YEAR, Q_DIM_GENRES, Q_DIM_PLATFORMS, Q_DIM_PUBLISHERS,
-    REGIONS, build_where_clause, q_kpi, q_sales_by_year
+    REGIONS, build_where_clause, q_top_games, q_top_dim
 )
-
-
-ensure_db()
 
 
 st.set_page_config(page_title="Top", layout="wide")
@@ -61,6 +58,7 @@ with colB:
 top_plat = read_sql(q_top_dim(where, sales_col, dim="platform", limit=top_n), params=params)
 fig3 = px.bar(top_plat, x="sales", y="label", orientation="h", title=f"Top {top_n} plateformes – {region}")
 st.plotly_chart(fig3, use_container_width=True)
+
 
 
 

@@ -2,11 +2,11 @@ import streamlit as st
 import plotly.express as px
 
 #avant de lire la DB avec read sql, il faut en forcer la création
-from utils.db import ensure_db
+from app.utils.db import ensure_db
 ensure_db()
 
-from utils.db import read_sql
-from utils.queries import (
+from app.utils.db import read_sql
+from app.utils.queries import (
     Q_MINMAX_YEAR, Q_DIM_GENRES, Q_DIM_PLATFORMS, Q_DIM_PUBLISHERS,
     REGIONS, build_where_clause, q_top_games, q_top_dim
 )
@@ -51,4 +51,5 @@ with colB:
 top_plat = read_sql(q_top_dim(where, sales_col, dim="platform", limit=top_n), params=params)
 fig3 = px.bar(top_plat, x="sales", y="label", orientation="h", title=f"Top {top_n} plateformes – {region}")
 st.plotly_chart(fig3, use_container_width=True)
+
 

@@ -50,7 +50,8 @@ def get_engine():
     return create_engine(f"sqlite:///{db_path}")
 
 
-@st.cache_data
 def read_sql(query: str, params=None) -> pd.DataFrame:
     engine = get_engine()
     return pd.read_sql(query, engine, params=params)
+
+

@@ -45,8 +45,3 @@ Champs typiques :
 - **Streamlit** : app/dashboard
 - **Plotly** : visualisations
 - **SQLAlchemy** : connexion SQLite
-
----
-
-## 🗂️ Structure du projet
-

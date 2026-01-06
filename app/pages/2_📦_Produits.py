@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
 import streamlit as st
 import plotly.express as px
 
@@ -5,11 +13,13 @@ import plotly.express as px
 from app.utils.db import ensure_db
 ensure_db()
 
-from app.utils.db import read_sql
+from app.utils.db import ensure_db, read_sql
 from app.utils.queries import (
     Q_MINMAX_YEAR, Q_DIM_GENRES, Q_DIM_PLATFORMS, Q_DIM_PUBLISHERS,
     REGIONS, build_where_clause, q_top_games, q_top_dim
 )
+
+ensure_db()
 
 
 st.set_page_config(page_title="Top", layout="wide")
@@ -51,5 +61,6 @@ with colB:
 top_plat = read_sql(q_top_dim(where, sales_col, dim="platform", limit=top_n), params=params)
 fig3 = px.bar(top_plat, x="sales", y="label", orientation="h", title=f"Top {top_n} plateformes – {region}")
 st.plotly_chart(fig3, use_container_width=True)
+
 
 

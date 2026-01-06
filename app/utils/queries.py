@@ -1,5 +1,5 @@
-Q_MINMAX_YEAR = """
-SELECT MIN(Year) AS min_y, MAX(Year) AS max_y FROM vgsales
+Q_MINMAX_year = """
+SELECT MIN(year) AS min_y, MAX(year) AS max_y FROM vgsales
 """
 
 Q_DIM_GENRES = "SELECT DISTINCT genre FROM vgsales ORDER BY genre"
@@ -15,7 +15,7 @@ REGIONS = {
 }
 
 def build_where_clause(ymin: int, ymax: int, genre: str, platform: str, publisher: str):
-    where = "WHERE Year BETWEEN :ymin AND :ymax"
+    where = "WHERE year BETWEEN :ymin AND :ymax"
     params = {"ymin": ymin, "ymax": ymax}
 
     if genre != "All":
@@ -45,11 +45,11 @@ def q_kpi(where: str, sales_col: str):
 
 def q_sales_by_year(where: str, sales_col: str):
     return f"""
-    SELECT Year, SUM({sales_col}) AS sales
+    SELECT year, SUM({sales_col}) AS sales
     FROM vgsales
     {where}
-    GROUP BY Year
-    ORDER BY Year
+    GROUP BY year
+    ORDER BY year
     """
 
 def q_top_games(where: str, sales_col: str, limit: int = 15):
@@ -71,3 +71,4 @@ def q_top_dim(where: str, sales_col: str, dim: str, limit: int = 15):
     ORDER BY sales DESC
     LIMIT {limit}
     """
+

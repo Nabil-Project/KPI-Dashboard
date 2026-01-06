@@ -1,11 +1,17 @@
 import streamlit as st
 import plotly.express as px
 
+#forcer la création de la DB avant tout
+from utils.db import ensure_db
+ensure_db()
+
 from utils.db import read_sql
 from utils.queries import (
     Q_MINMAX_YEAR, Q_DIM_GENRES, Q_DIM_PLATFORMS, Q_DIM_PUBLISHERS,
     REGIONS, build_where_clause, q_kpi, q_sales_by_year
 )
+
+
 
 
 st.set_page_config(page_title="Overview", layout="wide")
@@ -67,3 +73,4 @@ st.caption("ℹ️ Les colonnes de ventes (NA/EU/JP/Global) sont exprimées en *
 ts = read_sql(q_sales_by_year(where, sales_col), params=params)
 fig = px.line(ts, x="Year", y="sales", title=f"Ventes par année – {region}")
 st.plotly_chart(fig, use_container_width=True)
+

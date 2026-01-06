@@ -1,5 +1,5 @@
 # KPI-Dashboard
-KPI Dashboard “E-commerce”
+
 # 🎮 Video Game Sales Dashboard (Python + SQL + Streamlit)
 
 ## 🎯 Objectif du projet

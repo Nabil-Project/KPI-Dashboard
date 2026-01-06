@@ -22,6 +22,20 @@ from app.utils.queries import (
 st.set_page_config(page_title="Top", layout="wide")
 st.title("🏆 Tops – Jeux / Plateformes / Éditeurs")
 
+st.markdown("""
+### 📘 Clé de lecture des graphiques
+
+- Les **ventes** sont exprimées en **millions d’unités vendues**.
+- Exemple :
+  - `1.50` = **1,5 million** d’exemplaires
+  - `1200` = **1,2 milliard** d’exemplaires
+- Les classements (**Top jeux / plateformes / éditeurs**) sont calculés
+  **selon les filtres sélectionnés** (années, région, genre, etc.).
+
+💡 Astuce : change la **région** ou la **période** pour comparer les performances.
+""")
+
+
 st.sidebar.header("Filtres")
 
 minmax = read_sql(Q_MINMAX_YEAR).iloc[0]
@@ -58,6 +72,7 @@ with colB:
 top_plat = read_sql(q_top_dim(where, sales_col, dim="platform", limit=top_n), params=params)
 fig3 = px.bar(top_plat, x="sales", y="label", orientation="h", title=f"Top {top_n} plateformes – {region}")
 st.plotly_chart(fig3, use_container_width=True)
+
 
 
 

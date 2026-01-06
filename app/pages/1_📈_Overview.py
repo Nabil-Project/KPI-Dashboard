@@ -10,14 +10,14 @@ import streamlit as st
 import plotly.express as px
 
 #forcer la création de la DB avant tout
-from app.utils.db import ensure_db
+from app.utils.db import ensure_db, read_sql
 ensure_db()
 
-from app.utils.db import ensure_db, read_sql
 from app.utils.queries import (
     Q_MINMAX_YEAR, Q_DIM_GENRES, Q_DIM_PLATFORMS, Q_DIM_PUBLISHERS,
     REGIONS, build_where_clause, q_kpi, q_sales_by_year
 )
+
 
 ensure_db()
 
@@ -80,8 +80,9 @@ st.caption("ℹ️ Les colonnes de ventes (NA/EU/JP/Global) sont exprimées en *
 
 # ---- Trend
 ts = read_sql(q_sales_by_year(where, sales_col), params=params)
-fig = px.line(ts, x="Year", y="sales", title=f"Ventes par année – {region}")
+fig = px.line(ts, x="year", y="sales", title=f"Ventes par année – {region}")
 st.plotly_chart(fig, use_container_width=True)
+
 
 
 

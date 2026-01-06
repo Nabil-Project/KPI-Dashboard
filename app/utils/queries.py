@@ -1,6 +1,7 @@
-Q_MINMAX_year = """
-SELECT MIN(year) AS min_y, MAX(year) AS max_y FROM vgsales
-"""
+# app/utils/queries.py
+
+# ⚠️ En base, on utilise year (minuscule)
+Q_MINMAX_YEAR = "SELECT MIN(year) AS min_y, MAX(year) AS max_y FROM vgsales"
 
 Q_DIM_GENRES = "SELECT DISTINCT genre FROM vgsales ORDER BY genre"
 Q_DIM_PLATFORMS = "SELECT DISTINCT platform FROM vgsales ORDER BY platform"
@@ -11,7 +12,7 @@ REGIONS = {
     "North America": "na_sales",
     "Europe": "eu_sales",
     "Japan": "jp_sales",
-    "Other": "other_sales"
+    "Other": "other_sales",
 }
 
 def build_where_clause(ymin: int, ymax: int, genre: str, platform: str, publisher: str):
@@ -71,4 +72,3 @@ def q_top_dim(where: str, sales_col: str, dim: str, limit: int = 15):
     ORDER BY sales DESC
     LIMIT {limit}
     """
-

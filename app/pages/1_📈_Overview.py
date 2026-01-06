@@ -79,13 +79,19 @@ st.caption("ℹ️ Les colonnes de ventes (NA/EU/JP/Global) sont exprimées en *
 # ---- Trend
 ts = read_sql(q_sales_by_year(where, sales_col), params=params)
 
-# sécurité : si filtre = rien → pas de graphe
 if ts.empty:
     st.warning("Aucune donnée pour ces filtres.")
 else:
+    # Normalise les noms de colonnes (ça évite Year/year etc.)
+    cols = list(ts.columns)
+    if len(cols) >= 2:
+        ts = ts.rename(columns={cols[0]: "year", cols[1]: "sales"})
+
     ts["year"] = ts["year"].astype(int)
     fig = px.line(ts, x="year", y="sales", title=f"Ventes par année – {region}")
     st.plotly_chart(fig, use_container_width=True)
+
+
 
 
 

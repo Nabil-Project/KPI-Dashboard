@@ -19,8 +19,6 @@ from app.utils.queries import (
 )
 
 
-ensure_db()
-
 
 
 st.set_page_config(page_title="Overview", layout="wide")
@@ -80,8 +78,15 @@ st.caption("ℹ️ Les colonnes de ventes (NA/EU/JP/Global) sont exprimées en *
 
 # ---- Trend
 ts = read_sql(q_sales_by_year(where, sales_col), params=params)
-fig = px.line(ts, x="year", y="sales", title=f"Ventes par année – {region}")
-st.plotly_chart(fig, use_container_width=True)
+
+# sécurité : si filtre = rien → pas de graphe
+if ts.empty:
+    st.warning("Aucune donnée pour ces filtres.")
+else:
+    ts["year"] = ts["year"].astype(int)
+    fig = px.line(ts, x="year", y="sales", title=f"Ventes par année – {region}")
+    st.plotly_chart(fig, use_container_width=True)
+
 
 
 
